@@ -78,5 +78,15 @@ namespace W26Week8DisconnectedModel
             grdProducts.ItemsSource = crud.GetAllProducts().DefaultView;
             MessageBox.Show("Product updated");
         }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int id = Convert.ToInt32(txtId.Text);
+            
+            crud.Delete(id);
+
+            grdProducts.ItemsSource = crud.GetAllProducts().DefaultView;
+            MessageBox.Show("Product deleted");
+        }
     }
 }

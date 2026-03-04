@@ -73,5 +73,15 @@ namespace W26Week8DisconnectedModel
             _adp.UpdateCommand = _cmdBuilder.GetUpdateCommand();
             _adp.Update(_tblProds);
         }
+
+        public void Delete(int id)
+        {
+            var row = _tblProds.Rows.Find(id);
+
+            row!.Delete();
+
+            _adp.DeleteCommand = _cmdBuilder.GetDeleteCommand();
+            _adp.Update(_tblProds);
+        }
     }
 }
