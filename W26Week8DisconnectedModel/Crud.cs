@@ -22,6 +22,8 @@ namespace W26Week8DisconnectedModel
             _adp = new SqlDataAdapter(query, _conn);
 
             _cmdBuilder = new SqlCommandBuilder(_adp);
+
+            InitProductsTable();
         }
 
         private void InitProductsTable()
