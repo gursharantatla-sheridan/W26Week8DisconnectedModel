@@ -22,6 +22,8 @@ namespace W26Week8DisconnectedModel
         public MainWindow()
         {
             InitializeComponent();
+
+            LoadCategories();
         }
 
         private void btnLoadAllProducts_Click(object sender, RoutedEventArgs e)
@@ -92,6 +94,23 @@ namespace W26Week8DisconnectedModel
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             grdProducts.ItemsSource = crud.SearchProductsByName(txtName.Text).DefaultView;
+        }
+
+        private void LoadCategories()
+        {
+            cmbCategories.ItemsSource = crud.GetCategories().DefaultView;
+            cmbCategories.DisplayMemberPath = "CategoryName";
+            cmbCategories.SelectedValuePath = "CategoryID";
+        }
+
+        private void cmbCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbCategories.SelectedItem != null)
+            {
+                int catId = (int)cmbCategories.SelectedValue;
+
+                grdProducts.ItemsSource = crud.GetProductsByCategory(catId).DefaultView;
+            }
         }
     }
 }

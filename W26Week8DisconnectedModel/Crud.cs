@@ -69,7 +69,7 @@ namespace W26Week8DisconnectedModel
             row["ProductName"] = name;
             row["UnitPrice"] = price;
             row["UnitsInStock"] = quantity;
-            
+
             _adp.UpdateCommand = _cmdBuilder.GetUpdateCommand();
             _adp.Update(_tblProds);
         }
@@ -90,6 +90,36 @@ namespace W26Week8DisconnectedModel
 
             SqlCommand cmd = new SqlCommand(query, _conn);
             cmd.Parameters.AddWithValue("pName", "%" + name + "%");
+
+            SqlDataAdapter adp = new SqlDataAdapter(cmd);
+
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+
+            return ds.Tables[0];
+        }
+
+        public DataTable GetCategories()
+        {
+            string query = "select CategoryID, CategoryName from Categories";
+
+            SqlDataAdapter adp = new SqlDataAdapter(query, _conn);
+
+            DataSet ds = new DataSet();
+            adp.Fill(ds);
+
+            return ds.Tables[0];
+        }
+
+        public DataTable GetProductsByCategory(int catId)
+        {
+            string query = "select p.ProductID, p.ProductName, c.CategoryName from Categories c" +
+                " inner join Products p" +
+                " on c.CategoryID = p.CategoryID" +
+                " where p.CategoryID=@catId";
+
+            SqlCommand cmd = new SqlCommand(query, _conn);
+            cmd.Parameters.AddWithValue("catId", catId);
 
             SqlDataAdapter adp = new SqlDataAdapter(cmd);
 
