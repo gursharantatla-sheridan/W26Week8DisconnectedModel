@@ -53,5 +53,17 @@ namespace W26Week8DisconnectedModel
                 MessageBox.Show("Invalid ID. Product not found");
             }
         }
+
+        private void btnInsert_Click(object sender, RoutedEventArgs e)
+        {
+            string name = txtName.Text;
+            decimal price = Convert.ToDecimal(txtPrice.Text);
+            short quantity = Convert.ToInt16(txtQuantity.Text);
+
+            crud.Insert(name, price, quantity);
+
+            grdProducts.ItemsSource = crud.GetAllProducts().DefaultView;
+            MessageBox.Show("New product added");
+        }
     }
 }

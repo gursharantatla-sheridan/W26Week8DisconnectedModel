@@ -49,5 +49,17 @@ namespace W26Week8DisconnectedModel
             var row = _tblProds.Rows.Find(id);
             return row;
         }
+
+        public void Insert(string name, decimal price, short quantity)
+        {
+            var row = _tblProds.NewRow();
+            row["ProductName"] = name;
+            row["UnitPrice"] = price;
+            row["UnitsInStock"] = quantity;
+            _tblProds.Rows.Add(row);    // required
+
+            _adp.InsertCommand = _cmdBuilder.GetInsertCommand();
+            _adp.Update(_tblProds);
+        }
     }
 }
