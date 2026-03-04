@@ -32,13 +32,22 @@ namespace W26Week8DisconnectedModel
             _tblProds = _ds.Tables["Products"]!;
 
             // define the primary key
-
+            DataColumn[] pk = new DataColumn[1];
+            pk[0] = _tblProds.Columns["ProductID"]!;
+            pk[0].AutoIncrement = true;
+            _tblProds.PrimaryKey = pk;
         }
 
         public DataTable GetAllProducts()
         {
             InitProductsTable();
             return _tblProds;
+        }
+
+        public DataRow? GetProductById(int id)
+        {
+            var row = _tblProds.Rows.Find(id);
+            return row;
         }
     }
 }
